@@ -1,20 +1,4 @@
 package server;
-/*
-    * Copyright 2012 The Netty Project
-    *
-    * The Netty Project licenses this file to you under the Apache License,
-    * version 2.0 (the "License"); you may not use this file except in compliance
-    * with the License. You may obtain a copy of the License at:
-   *
-    *   http://www.apache.org/licenses/LICENSE-2.0
-   *
-   * Unless required by applicable law or agreed to in writing, software
-   * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-   * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-   * License for the specific language governing permissions and limitations
-   * under the License.
-   */
-//package io.netty.example.objectecho;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -23,7 +7,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-//import io.netty.example.echo.EchoServer;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
@@ -33,32 +16,36 @@ import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
 
-/**
- * Modification of {@link EchoServer} which utilizes Java object serialization.
- */
 public final class ObjectEchoServer {
 
 	static final boolean SSL = System.getProperty("ssl") != null;
+	//getProperty(string, type)
 	static final int PORT = Integer.parseInt(System.getProperty("port", "8007"));
 
 	public static void main(String[] args) throws Exception {
 		// Configure SSL.
+		//Création d'une socket sécurisée via la factory ssl
 		final SslContext sslCtx;
 		if (SSL) {
+			//Genere un certificat & clé temporaire pour faire des tests | supprimé à l'extinction de la JVM
+			//NOTE: Ne pas utiliser le certificat et la clé générée par cette classe en PROD
 			SelfSignedCertificate ssc = new SelfSignedCertificate();
 			sslCtx = SslContextBuilder.forServer(ssc.certificate(), ssc.privateKey()).build();
 		} else {
 			sslCtx = null;
 		}
 
+		//EventLoopGroup retourne les EventLoop (handle all the I/O operations for a Channel once registered)
 		EventLoopGroup bossGroup = new NioEventLoopGroup(1);
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
 		try {
 			ServerBootstrap b = new ServerBootstrap();
+			//Set the EventLoopGroup for the parent (acceptor) and the child (client). These EventLoopGroup's are used to handle all the events and IO for ServerChannel and Channel's.
 			b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
 					.handler(new LoggingHandler(LogLevel.INFO)).childHandler(new ChannelInitializer<SocketChannel>() {
 						@Override
 						public void initChannel(SocketChannel ch) throws Exception {
+							//Création du flux I/O
 							ChannelPipeline p = ch.pipeline();
 							if (sslCtx != null) {
 								p.addLast(sslCtx.newHandler(ch.alloc()));
