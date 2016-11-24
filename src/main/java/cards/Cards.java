@@ -1,42 +1,93 @@
 package cards;
 
-public class Cards {
+import java.util.Vector;
+import java.util.Iterator;
+
+
+public class Cards 
+{
+	private static int[] deck = new int[32];
+	private static String[] suits = { "Pique", "Coeur", "Carreau", "Trèfle" };
+	private static int[] ranks = { 7, 8, 9, 10, 11, 12, 13, 14 };
+	
+	
+	private static Vector<Integer> victor = new Vector<Integer>(32);
+
 	public static void main(String[] args)
-	 {
-		    int[] deck = new int[32];
-		    String[] suits = {"Pique", "Coeur", "Carreau", "Trèfle"};
-		    int[] ranks = {7, 8, 9, 10, 11, 12, 13, 14};
+	{
+//		init_deck();
+//		shuffle_deck();
+		fill_deck();
+		check_value();
+	}
+	
+	public static void init_deck()
+	{// Initialize cards
+		for (int i = 0; i < deck.length; i++)
+		{
+			deck[i] = i;
+		}
+	}
 
-		    // Initialize cards
-		    for (int i = 0; i < deck.length; i++)
-		    {
-		      deck[i] = i;
-		    }
+	public static void shuffle_deck() 
+	{
+		// Shuffle the cards
+		for (int i = 0; i < deck.length; i++) 
+		{
+			int index = (int) (Math.random() * deck.length);
+			int temp = deck[i];
+			deck[i] = deck[index];
+			deck[index] = temp;
+		}
+	}
 
-		    // Shuffle the cards
-		    for (int i = 0; i < deck.length; i++)
-		    {
-		      int index = (int)(Math.random() * deck.length);
-		      int temp = deck[i];
-		      deck[i] = deck[index];
-		      deck[index] = temp;
-		    }
-
-		    // Display the all the cards
-		    for (int i = 0; i < 32; i++)
-		    {
-		    	  if (i >= 16)
-			      	{
-			    	  String suit2 = suits[deck[i] / 8];
-				      int rank2 = ranks[deck[i] % 8];
-				      System.out.println(suit2 + " de " + rank2 + " ----->Joueur 2");
-			      	}
-		    	  else
-		    	  {
-		    		  String suit = suits[deck[i] / 8];
-		    		  int rank = ranks[deck[i] % 8];
-		    		  System.out.println(suit + " de " + rank);
-		    	  }
-		      }
-		    }
+	public static void fill_deck()
+	{
+		victor.add(11);
+		victor.add(12);
+		victor.add(13);
+		victor.add(14);
+		victor.add(21);
+		victor.add(22);
+		victor.add(23);
+		victor.add(24);
+		victor.add(31);
+		victor.add(32);
+		victor.add(33);
+		victor.add(34);
+		victor.add(41);
+		victor.add(42);
+		victor.add(43);
+		victor.add(44);
+		victor.add(51);
+		victor.add(52);
+		victor.add(53);
+		victor.add(54);
+		victor.add(61);
+		victor.add(62);
+		victor.add(63);
+		victor.add(64);
+		victor.add(71);
+		victor.add(72);
+		victor.add(73);
+		victor.add(74);
+		victor.add(81);
+		victor.add(82);
+		victor.add(83);
+		victor.add(84);
+		// The Iterator object is obtained using iterator() method
+		Iterator it = victor.iterator();
+		// To iterate through the elements of the collection we can use
+		// hasNext() and next() methods of Iterator
+		System.out.println("Vector elements :");
+//		while (it.hasNext())
+//			System.out.println(it.next());
+	}
+	public static void check_value()
+	{
+		int res = victor.get(1) / 10;
+		int res2 = victor.get(31) / 10;
+		if (res < res2)
+			System.out.println(res + " < " + res2);
+	}
 }
