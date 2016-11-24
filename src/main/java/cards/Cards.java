@@ -5,8 +5,8 @@ public class Cards
 	 public static void main(String[] args)
 	 {
 		    int[] deck = new int[32];
-		    String[] suits = {"Spades", "Hearts", "Diamonds", "Clubs"};
-		    String[] ranks = {"Ace", "7", "8", "9", "10", "Jack", "Queen", "King"};
+		    String[] suits = {"Pique", "Coeur", "Carreau", "Trèfle"};
+		    int[] ranks = {7, 8, 9, 10, 11, 12, 13, 14};
 
 		    // Initialize cards
 		    for (int i = 0; i < deck.length; i++) {
@@ -24,8 +24,8 @@ public class Cards
 		    // Display the all the cards
 		    for (int i = 0; i < 32; i++) {
 		      String suit = suits[deck[i] / 8];
-		      String rank = ranks[deck[i] % 8];
-		      System.out.println( rank + " of " + suit);
+		      int rank = ranks[deck[i] % 8];
+		      System.out.println(suit + " de " + rank);
 		    }
 		  }
 }
