@@ -68,6 +68,7 @@ public class TelnetServerHandler extends SimpleChannelInboundHandler<String> {
 					Arrays.fill(str1, null);
 					Arrays.fill(str2, null);
 					TelnetServer.rq.clear();
+					//wesh
 				}
 				response = "ftg";
 			}

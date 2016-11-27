@@ -15,7 +15,7 @@ import io.netty.bootstrap.ServerBootstrap;
   import io.netty.channel.ChannelHandlerContext;
   
   /**
-   * Simplistic telnet server.
+   * Simplistic telnet server
    */
   public final class TelnetServer {
   
