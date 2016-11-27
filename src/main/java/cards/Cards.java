@@ -6,39 +6,12 @@ import java.util.Iterator;
 
 public class Cards 
 {
-	private static int[] deck = new int[32];
-	private static String[] suits = { "Pique", "Coeur", "Carreau", "Trèfle" };
-	private static int[] ranks = { 7, 8, 9, 10, 11, 12, 13, 14 };
-	
-	
 	private static Vector<Integer> victor = new Vector<Integer>(32);
 
 	public static void main(String[] args)
 	{
-//		init_deck();
-//		shuffle_deck();
 		fill_deck();
 		check_value();
-	}
-	
-	public static void init_deck()
-	{// Initialize cards
-		for (int i = 0; i < deck.length; i++)
-		{
-			deck[i] = i;
-		}
-	}
-
-	public static void shuffle_deck() 
-	{
-		// Shuffle the cards
-		for (int i = 0; i < deck.length; i++) 
-		{
-			int index = (int) (Math.random() * deck.length);
-			int temp = deck[i];
-			deck[i] = deck[index];
-			deck[index] = temp;
-		}
 	}
 
 	public static void fill_deck()
@@ -75,14 +48,8 @@ public class Cards
 		victor.add(82);
 		victor.add(83);
 		victor.add(84);
-		// The Iterator object is obtained using iterator() method
-		Iterator it = victor.iterator();
-		// To iterate through the elements of the collection we can use
-		// hasNext() and next() methods of Iterator
-		System.out.println("Vector elements :");
-//		while (it.hasNext())
-//			System.out.println(it.next());
 	}
+	
 	public static void check_value()
 	{
 		int res = victor.get(1) / 10;

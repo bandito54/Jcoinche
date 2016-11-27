@@ -1,6 +1,7 @@
 package server;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
@@ -56,7 +57,10 @@ public final class ObjectEchoServer {
 					});
 
 			// Bind and start to accept incoming connections.
-			b.bind(PORT).sync().channel().closeFuture().sync();
+			ChannelFuture fdp = b.bind(PORT).sync().channel().closeFuture().sync();
+			int i = 0;
+			if (fdp.isSuccess() == true)
+				i++;
 		} finally {
 			bossGroup.shutdownGracefully();
 			workerGroup.shutdownGracefully();

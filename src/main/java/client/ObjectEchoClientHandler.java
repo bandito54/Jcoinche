@@ -2,8 +2,13 @@ package client;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.ChannelPipeline; 
 import java.util.ArrayList;
 import java.util.List;
+import io.netty.*;
+import io.netty.buffer.DefaultByteBufHolder;
+import io.netty.handler.codec.http.websocketx.WebSocketFrame;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 
 /**
  * Handler implementation for the object echo client. It initiates the ping-pong
@@ -12,20 +17,23 @@ import java.util.List;
  */
 public class ObjectEchoClientHandler extends ChannelInboundHandlerAdapter {
 
-	private final List<Integer> firstMessage;
-
+private final List<Integer> firstMessage; 
 	/**
 	 * Creates a client-side handler.
 	 */
-	public ObjectEchoClientHandler() {
+	public ObjectEchoClientHandler()
+	{
 		firstMessage = new ArrayList<Integer>(ObjectEchoClient.SIZE);
-		for (int i = 0; i < ObjectEchoClient.SIZE; i++) {
+		for (int i = 0; i < ObjectEchoClient.SIZE; i++)
+		{
 			firstMessage.add(Integer.valueOf(i));
 		}
 	}
 
+	
 	@Override
-	public void channelActive(ChannelHandlerContext ctx) {
+	public void channelActive(ChannelHandlerContext ctx)
+	{
 		// Send the first message if this handler is a client-side handler.
 		ctx.writeAndFlush(firstMessage);
 	}
