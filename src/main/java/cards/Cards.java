@@ -7,13 +7,58 @@ import java.util.Iterator;
 public class Cards 
 {
 	private static Vector<Integer> victor = new Vector<Integer>(32);
+	private static Vector<Integer> TMP = new Vector<Integer>(32);
+	private static Vector<Integer> D1 = new Vector<Integer>(32);
+	private static Vector<Integer> D2 = new Vector<Integer>(32);
 
 	public static void main(String[] args)
 	{
 		fill_deck();
-		check_value();
+		check_value(21, 33);
+		split_deck();
+		
+//		Iterator<Integer> iterator = D1.iterator();  
+// 	   	Iterator<Integer> iterator2 = D2.iterator(); 
+// 	   while (iterator.hasNext())
+// 	   {
+// 		   System.out.println("D1 contains "+iterator.next() + " ");  
+// 		   System.out.println("D2 contains "+iterator2.next() + " ");  
+// 	   }
 	}
-
+	public static void check_value(int res, int res2)
+	{
+		if (res / 10 < res2 / 10)
+			System.out.println(res + " < " + res2 + " Player Two Win");
+		else if (res / 10 > res2 / 10)
+			System.out.println(res + " > " + res2 + " Player One Win");
+		else
+			System.out.println("It's a draw !");
+	}
+	
+	public static void split_deck()
+	{
+    	for (int K = 0; K < 32; K++)
+    	{
+    	    int add = (int)(Math.random() * 32);
+    	    while (TMP.contains(add)) 
+    	    {
+    	        add = (int) (Math.random() * 32);
+    	    }
+    	    TMP.add(add);
+    	}
+    	   int i = 0;
+    	   while (i != 16)
+    	   {
+    		   D1.add(victor.get(TMP.get(i)));
+    		   i++;
+    	   }
+    	   while (i != 32)
+    	   {
+    		   D2.add(victor.get(TMP.get(i)));
+    		   i++;
+    	   }	   
+	}
+	
 	public static void fill_deck()
 	{
 		victor.add(11);
@@ -48,13 +93,5 @@ public class Cards
 		victor.add(82);
 		victor.add(83);
 		victor.add(84);
-	}
-	
-	public static void check_value()
-	{
-		int res = victor.get(1) / 10;
-		int res2 = victor.get(31) / 10;
-		if (res < res2)
-			System.out.println(res + " < " + res2);
 	}
 }
