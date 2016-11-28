@@ -22,9 +22,8 @@ public class TelnetServerHandler extends SimpleChannelInboundHandler<String> {
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		// Send greeting for a new connection.
 		System.out.println("wesh");
-		ctx.write("Welcome to " + InetAddress.getLocalHost().getHostName() + "!\r\n");
-		ctx.write("It is " + new Date() + " now.\r\n");
 		TelnetServer.ctxs.add(ctx);
+		ctx.write("Welcome player " + TelnetServer.ctxs.size() + "!\r\n");
 		if (TelnetServer.ctxs.size() == 1)
 			for (int i = 0; i < 16; i++)
 				ctx.write("gv " + Cards.D1.get(i) + "\r\n");

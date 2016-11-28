@@ -23,7 +23,8 @@ import cards.*;
       static final boolean SSL = System.getProperty("ssl") != null;
       static final String HOST = System.getProperty("host", "10.18.207.82");
       static final int PORT = Integer.parseInt(System.getProperty("port", SSL? "7575" : "6565"));
-  
+      public static int player = 0; 
+      
       public static void main(String[] args) throws Exception {
           // Configure SSL.
           final SslContext sslCtx;
@@ -55,7 +56,7 @@ import cards.*;
   
                   // Sends the received line to the server.
                   if (line.equals("fdp"))
-                	  lastWriteFuture = ch.writeAndFlush("crd " + Cards.D1.get(0) + "\r\n");
+                	  lastWriteFuture = ch.writeAndFlush("crd " + Cards.D1.get(0) + " " + player + "\r\n");
   
                   // If user typed the 'bye' command, wait until the server closes
                   // the connection.

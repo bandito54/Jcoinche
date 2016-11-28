@@ -18,6 +18,8 @@ import io.netty.channel.SimpleChannelInboundHandler;
       {
     	 String[] cutt = null;
     	 cutt = msg.split(" ");
+    	 if (cutt[0].equals("Welcome"))
+    		 TelnetClient.player = Integer.parseInt(cutt[2]);
     	 if (cutt[0].equals("gv"))
     	 {
     		 Cards.D1.add(Integer.parseInt(cutt[1]));
