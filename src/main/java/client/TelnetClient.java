@@ -1,5 +1,6 @@
 package client;
 
+import cards.*;
  import io.netty.bootstrap.Bootstrap;
   import io.netty.channel.Channel;
   import io.netty.channel.ChannelFuture;
@@ -16,11 +17,12 @@ package client;
   /**
    * Simplistic telnet client.
    */
-  public final class TelnetClient {
-  
+  public final class TelnetClient
+  {
+	  static final Cards CARD = new Cards();
       static final boolean SSL = System.getProperty("ssl") != null;
-      static final String HOST = System.getProperty("host", "127.0.0.1");
-      static final int PORT = Integer.parseInt(System.getProperty("port", SSL? "8992" : "8023"));
+      static final String HOST = System.getProperty("host", "10.18.207.82");
+      static final int PORT = Integer.parseInt(System.getProperty("port", SSL? "7575" : "6565"));
   
       public static void main(String[] args) throws Exception {
           // Configure SSL.
