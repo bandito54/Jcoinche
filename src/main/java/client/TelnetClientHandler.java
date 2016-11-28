@@ -1,6 +1,6 @@
 package client;
 
-//import cards.*;
+import cards.*;
 //import java.util.Vector;
 import io.netty.channel.ChannelHandler.Sharable;
 //import server.TelnetServer;
@@ -20,10 +20,21 @@ import io.netty.channel.SimpleChannelInboundHandler;
     	 cutt = msg.split(" ");
     	 if (cutt[0].equals("gv"))
     	 {
-    		 TelnetClient.CARD.D1.add(Integer.parseInt(cutt[1]));
+    		 Cards.D1.add(Integer.parseInt(cutt[1]));
+    		 System.out.println(msg);
     	 }
     	 else if (cutt[0].equals("crd"))
     	 {
+    		 if (Integer.parseInt(cutt[1]) > Cards.D1.get(0))
+    		 {
+    			 ctx.write("gv " + Cards.D1.get(0));
+    			 Cards.D1.remove(0);
+    		 }
+    		 else if (Integer.parseInt(cutt[1]) < Cards.D1.get(0))
+    		 {
+    			 Cards.D2.add(Cards.D1.get(0));
+    			 Cards.D1.remove(0);
+    		 }
     		 System.out.println(msg);
     	 }
       }

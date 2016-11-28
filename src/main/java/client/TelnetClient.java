@@ -54,7 +54,8 @@ import cards.*;
                   }
   
                   // Sends the received line to the server.
-                  lastWriteFuture = ch.writeAndFlush(line + "\r\n");
+                  if (line.equals("fdp"))
+                	  lastWriteFuture = ch.writeAndFlush("crd " + Cards.D1.get(0) + "\r\n");
   
                   // If user typed the 'bye' command, wait until the server closes
                   // the connection.
