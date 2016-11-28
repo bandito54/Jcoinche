@@ -10,23 +10,21 @@ public class Cards
 	private static Vector<Integer> TMP = new Vector<Integer>(32);
 	public static Vector<Integer> D1 = new Vector<Integer>(32);
 	public static Vector<Integer> D2 = new Vector<Integer>(32);
-	private static Vector<Integer> Cim = new Vector<Integer>(32);
-	private static Vector<Integer> Cim2 = new Vector<Integer>(32);
+	public static Iterator<Integer> iterator = D1.iterator();
+	public static Iterator<Integer> iterator2 = D2.iterator();
 	
-	public static void main(String[] args)
-	{
-		fill_deck();
-		check_value(82, 84);
-		split_deck();
-		
-		Iterator<Integer> iterator = D1.iterator();  
- 	   	Iterator<Integer> iterator2 = D2.iterator(); 
- 	   while (iterator.hasNext())
- 	   {
- 		   System.out.println("D1 contains "+iterator.next() + " ");  
- 		   System.out.println("D2 contains "+iterator2.next() + " ");  
- 	   }
-	}
+//	public static void main(String[] args)
+//	{
+//		fill_deck();
+//		check_value(82, 84);
+//		split_deck();
+//		
+// 	   while (iterator.hasNext())
+// 	   {
+// 		   System.out.println("D1 contains "+iterator.next() + " ");  
+// 		   System.out.println("D2 contains "+iterator2.next() + " ");  
+// 	   }
+//	}
 	
 	public static void check_value(int res, int res2)
 	{

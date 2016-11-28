@@ -1,5 +1,6 @@
 package server;
 
+import cards.*;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler.Sharable;
@@ -20,9 +21,16 @@ public class TelnetServerHandler extends SimpleChannelInboundHandler<String> {
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		// Send greeting for a new connection.
+		System.out.println("wesh");
 		ctx.write("Welcome to " + InetAddress.getLocalHost().getHostName() + "!\r\n");
 		ctx.write("It is " + new Date() + " now.\r\n");
 		TelnetServer.ctxs.add(ctx);
+		if (TelnetServer.ctxs.size() == 1)
+			for (int i = 0; i < 16; i++)
+				ctx.write("gv " + Cards.D1.get(i) + "\r\n");
+		else
+			for (int i = 0; i < 16; i++)
+				ctx.write("gv " + Cards.D2.get(i) + "\r\n");
 		ctx.flush();
 	}
 
@@ -32,46 +40,30 @@ public class TelnetServerHandler extends SimpleChannelInboundHandler<String> {
 		int i, j;
 		String[] str1 = null;
 		String[] str2 = null;
-		String response;
-		boolean close = false;
-		if (request.isEmpty()) 
+		if (TelnetServer.rq.isEmpty()) 
 		{
-			response = "Please type something.\r\n";
-		}
-		else if ("bye".equals(request.toLowerCase()))
-		{
-			System.out.println("bye");
-			response = "Have a good day!\r\n";
-			close = true;
+			TelnetServer.rq.add(request);
+			System.out.println("dans le if");
 		}
 		else 
-			{
- 				if (TelnetServer.rq.isEmpty()) 
-				{
-					TelnetServer.rq.add(request);
-					System.out.println("dans le if");
-				}
-				else 
-				{
-					System.out.println("dans le else");
-					str1 = TelnetServer.rq.get(0).split(" ");
-					System.out.println("Split");
-					i = Integer.parseInt(str1[2]);
-					System.out.println("Avant de rajouter");
-					TelnetServer.rq.add(request);
-					System.out.println("Après rajouter");
-					str2 = TelnetServer.rq.get(1).split(" ");
-					j = Integer.parseInt(str2[2]);
-					System.out.println("valeur de i : " + i + "valeur de j : " + j);
-					TelnetServer.ctxs.get(i - 1).writeAndFlush(str2[1] + "\r\n");
-					TelnetServer.ctxs.get(j - 1).writeAndFlush(str1[1] + "\r\n");
-					Arrays.fill(str1, null);
-					Arrays.fill(str2, null);
-					TelnetServer.rq.clear();
-					//wesh
-				}
-				response = "ftg";
-			}
+		{
+			System.out.println("dans le else");
+			str1 = TelnetServer.rq.get(0).split(" ");
+			System.out.println("Split");
+			i = Integer.parseInt(str1[2]);
+			System.out.println("Avant de rajouter");
+			TelnetServer.rq.add(request);
+			System.out.println("Après rajouter");
+			str2 = TelnetServer.rq.get(1).split(" ");
+			j = Integer.parseInt(str2[2]);
+			System.out.println("valeur de i : " + i + "valeur de j : " + j);
+			TelnetServer.ctxs.get(i - 1).writeAndFlush(str2[1] + "\r\n");
+			TelnetServer.ctxs.get(j - 1).writeAndFlush(str1[1] + "\r\n");
+			Arrays.fill(str1, null);
+			Arrays.fill(str2, null);
+			TelnetServer.rq.clear();
+			//wesh
+		}
 	}
 }
 	// We do not need to write a ChannelBuffer here.

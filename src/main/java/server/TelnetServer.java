@@ -1,5 +1,6 @@
 package server;
 
+import cards.*;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -19,14 +20,17 @@ import io.netty.bootstrap.ServerBootstrap;
    */
   public final class TelnetServer {
   
+	  public static Cards card = new Cards();
 	  public static final ArrayList<ChannelHandlerContext> ctxs = new ArrayList<ChannelHandlerContext>(2);
 	  public static final Vector<String> rq = new Vector<String>(2); 
 	  static final boolean SSL = System.getProperty("ssl") != null;
-      static final int PORT = Integer.parseInt(System.getProperty("port", SSL? "7575" : "6565"));
+      static final int PORT = Integer.parseInt(System.getProperty("port", SSL? "6060" : "2626"));
   
      public static void main(String[] args) throws Exception {
           // Configure SSL.
-          final SslContext sslCtx;
+         Cards.fill_deck();
+         Cards.split_deck();
+    	 final SslContext sslCtx;
           if (SSL) {
               SelfSignedCertificate ssc = new SelfSignedCertificate();
               sslCtx = SslContextBuilder.forServer(ssc.certificate(), ssc.privateKey()).build();
