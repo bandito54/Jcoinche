@@ -23,7 +23,7 @@ public class TelnetServerHandler extends SimpleChannelInboundHandler<String> {
 		// Send greeting for a new connection.
 		System.out.println("wesh");
 		TelnetServer.ctxs.add(ctx);
-		ctx.write("Welcome player " + TelnetServer.ctxs.size() + "!\r\n");
+		ctx.write("Welcome player " + TelnetServer.ctxs.size() + " !\r\n");
 		if (TelnetServer.ctxs.size() == 1)
 			for (int i = 0; i < 16; i++)
 				ctx.write("gv " + Cards.D1.get(i) + "\r\n");
@@ -56,8 +56,8 @@ public class TelnetServerHandler extends SimpleChannelInboundHandler<String> {
 			str2 = TelnetServer.rq.get(1).split(" ");
 			j = Integer.parseInt(str2[2]);
 			System.out.println("valeur de i : " + i + "valeur de j : " + j);
-			TelnetServer.ctxs.get(i - 1).writeAndFlush(str2[1] + "\r\n");
-			TelnetServer.ctxs.get(j - 1).writeAndFlush(str1[1] + "\r\n");
+			TelnetServer.ctxs.get(i - 1).writeAndFlush("crd " + str2[1] + "\r\n");
+			TelnetServer.ctxs.get(j - 1).writeAndFlush("crd " + str1[1] + "\r\n");
 			Arrays.fill(str1, null);
 			Arrays.fill(str2, null);
 			TelnetServer.rq.clear();

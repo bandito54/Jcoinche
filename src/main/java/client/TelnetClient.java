@@ -56,8 +56,10 @@ import cards.*;
   
                   // Sends the received line to the server.
                   if (line.equals("fdp"))
+                  {
                 	  lastWriteFuture = ch.writeAndFlush("crd " + Cards.D1.get(0) + " " + player + "\r\n");
-  
+                	  System.out.println("Je joue la carte : " + Cards.D1.get(0));
+                  }
                   // If user typed the 'bye' command, wait until the server closes
                   // the connection.
                   if ("bye".equals(line.toLowerCase())) {
