@@ -28,6 +28,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
     	 }
     		 else if (cutt[0].equals("crd"))
     	 {
+    			 System.out.println("Votre adversaire a tiré " + cutt[1]);
     		 if (Integer.parseInt(cutt[1]) / 10 > Cards.D1.get(0) / 10)
     			 Cards.D1.remove(0);
     		 else if (Integer.parseInt(cutt[1]) / 10 < Cards.D1.get(0) / 10)
@@ -47,7 +48,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
     		 {
     			if (Cards.D2.size() == 0)
     			{
-    				System.out.println("unlucky");
+    				System.out.println("Wasted");
     				System.exit(1);
     			}
     			else
@@ -62,10 +63,10 @@ import io.netty.channel.SimpleChannelInboundHandler;
     		 }
     		 else if (Cards.D1.size() == 32)
     		 {
-    			 System.out.println("unlucky");
+    			 System.out.println("Victoire");
     			 System.exit(1);
     		 }
-    		 System.out.println(msg);
+    		 System.out.println("je détiens Exodia et " + (Cards.D1.size() + Cards.D2.size()) + " autre(s) cartes en main");
     	 }
       }
       
