@@ -1,5 +1,6 @@
 package client;
 
+import graphic.*;
 import cards.*;
  import io.netty.bootstrap.Bootstrap;
   import io.netty.channel.Channel;
@@ -25,7 +26,10 @@ import cards.*;
       static final int PORT = Integer.parseInt(System.getProperty("port", SSL? "6060" : "2626"));
       public static int player = 0; 
       
-      public static void main(String[] args) throws Exception {
+      public static void main(String[] args) throws Exception
+      {
+    	  CreateGui gui = new CreateGui();
+    	  
           // Configure SSL.
           final SslContext sslCtx;
           if (SSL) {
@@ -48,9 +52,12 @@ import cards.*;
               // Read commands from the stdin.
               ChannelFuture lastWriteFuture = null;
               BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-              for (;;) {
+
+              for (;;)
+              {
                   String line = in.readLine();
-                  if (line == null) {
+                  if (line == null)
+                  {
                       break;
                   }
   
@@ -67,12 +74,14 @@ import cards.*;
                       break;
                   }
               }
-  
+                
               // Wait until all messages are flushed before closing the channel.
               if (lastWriteFuture != null) {
                   lastWriteFuture.sync();
               }
-          } finally {
+          }
+          finally
+          {
               group.shutdownGracefully();
           }
       }

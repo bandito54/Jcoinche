@@ -8,9 +8,10 @@ import client.*;
 import server.*;
 
 public class CreateGui extends JFrame {
-	private static void createAndShowGUI(Cards deck) {
+	static JFrame frame = new JFrame("JCoinche");//CREATION DE MA FRAME
+
+	public static void createAndShowGUI(Cards deck) {
 		//PARAMETRES DE LA FENETRE
-		JFrame frame = new JFrame("JCoinche");//CREATION DE MA FRAME
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//FERME LE PROGRAMME SI ON FERME LA FENETRE
 		frame.setLocation(450, 250);//POSITIONNE LA FENETRE PAR RAPPORT A L'ECRAN
@@ -22,7 +23,12 @@ public class CreateGui extends JFrame {
 		gl.setHgap(10); //Cinq pixels d'espace entre les colonnes (Horizontal)
 		gl.setVgap(10); //Cinq pixels d'espace entre les lignes (Vertical)
 		frame.setLayout(gl);
+		// Display the window.
+		frame.setVisible(true);//AFFICHE LA FENETRE
+		frame.setSize(800, 315);//DONNE LES DIMENSIONS DE LA FENETRE
+	}
 
+	public static void contentGUI(Cards deck){
 		//ENCART DU JOUEUR 1
 		JLabel deck1 = new JLabel();
 		int total = Cards.D1.size() + Cards.D2.size();
@@ -41,14 +47,11 @@ public class CreateGui extends JFrame {
 		playButton.setActionCommand("enable");
 		playButton.setEnabled(true);
 	    frame.getContentPane().add(playButton, BorderLayout.CENTER);//MISE EN PLACE DU BOUTON AU CENTRE DE LA FRAME
-
-		// Display the window.
-		frame.setVisible(true);//AFFICHE LA FENETRE
-		frame.setSize(800, 315);//DONNE LES DIMENSIONS DE LA FENETRE
 	}
 
-	public static void main(String[] args) {
-		Cards test = new Cards();
-		createAndShowGUI(test);
-	}
+//	public static void main(String[] args) {
+//		Cards test = new Cards();
+//		createAndShowGUI(test);
+//		//contentGUI(test);
+//	}
 }
