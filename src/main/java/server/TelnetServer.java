@@ -18,29 +18,32 @@ import io.netty.bootstrap.ServerBootstrap;
   /**
    * Simplistic telnet server
    */
-  public final class TelnetServer {
-  
+  public final class TelnetServer
+  {
 	  public static Cards card = new Cards();
 	  public static final ArrayList<ChannelHandlerContext> ctxs = new ArrayList<ChannelHandlerContext>(2);
 	  public static final Vector<String> rq = new Vector<String>(2); 
 	  static final boolean SSL = System.getProperty("ssl") != null;
       static final int PORT = Integer.parseInt(System.getProperty("port", SSL? "6060" : "2626"));
   
-     public static void main(String[] args) throws Exception {
-          // Configure SSL.
+     public static void main(String[] args) throws Exception
+     {
          Cards.fill_deck();
          Cards.split_deck();
     	 final SslContext sslCtx;
-          if (SSL) {
+          if (SSL)
+          {
               SelfSignedCertificate ssc = new SelfSignedCertificate();
               sslCtx = SslContextBuilder.forServer(ssc.certificate(), ssc.privateKey()).build();
-          } else {
+          }
+          else
+          {
               sslCtx = null;
           }
-  
           EventLoopGroup bossGroup = new NioEventLoopGroup(1);
           EventLoopGroup workerGroup = new NioEventLoopGroup();
-          try {
+          try
+          {
               ServerBootstrap b = new ServerBootstrap();
               b.group(bossGroup, workerGroup)
                .channel(NioServerSocketChannel.class)
@@ -48,7 +51,9 @@ import io.netty.bootstrap.ServerBootstrap;
                .childHandler(new TelnetServerInitializer(sslCtx));
               
               b.bind(PORT).sync().channel().closeFuture().sync();
-          } finally {
+          }
+          finally
+          {
               bossGroup.shutdownGracefully();
               workerGroup.shutdownGracefully();
           }

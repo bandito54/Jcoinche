@@ -12,8 +12,8 @@ import io.netty.channel.ChannelInitializer;
   /**
    * Creates a newly configured {@link ChannelPipeline} for a new channel.
    */
-  public class TelnetServerInitializer extends ChannelInitializer<SocketChannel> {
-  
+  public class TelnetServerInitializer extends ChannelInitializer<SocketChannel>
+  {
       private static final StringDecoder DECODER = new StringDecoder();
       private static final StringEncoder ENCODER = new StringEncoder();
   
@@ -21,25 +21,22 @@ import io.netty.channel.ChannelInitializer;
   
       private final SslContext sslCtx;
   
-      public TelnetServerInitializer(SslContext sslCtx) {
+      public TelnetServerInitializer(SslContext sslCtx)
+      {
           this.sslCtx = sslCtx;
       }
   
       @Override
-      public void initChannel(SocketChannel ch) throws Exception {
-          ChannelPipeline pipeline = ch.pipeline();
-  
-         if (sslCtx != null) {
+      public void initChannel(SocketChannel ch) throws Exception
+      {
+    	  ChannelPipeline pipeline = ch.pipeline();
+         if (sslCtx != null)
+         {
               pipeline.addLast(sslCtx.newHandler(ch.alloc()));
-          }
-  
-          // Add the text line codec combination first,
+         }
           pipeline.addLast(new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
-          // the encoder and decoder are static as these are sharable
           pipeline.addLast(DECODER);
           pipeline.addLast(ENCODER);
-  
-          // and then business logic.
           pipeline.addLast(SERVER_HANDLER);
       }
   }

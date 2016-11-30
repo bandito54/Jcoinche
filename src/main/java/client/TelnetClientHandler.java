@@ -1,18 +1,40 @@
 package client;
 
 import cards.*;
-//import java.util.Vector;
 import io.netty.channel.ChannelHandler.Sharable;
-//import server.TelnetServer;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-  
-  /**
-   * Handles a client-side channel.
-   */
+
   @Sharable
   public class TelnetClientHandler extends SimpleChannelInboundHandler<String>
-  {
+  {  
+	  void	which_card(int x)
+	  {
+		  if (x / 10 == 1)
+			  System.out.print(" 7 de ");
+		  else if (x / 10 == 2)
+			  System.out.print(" 8 de ");
+		  else if (x / 10 == 3)
+			  System.out.print(" 9 de ");
+		  else if (x / 10 == 4)
+			  System.out.print(" 10 de ");
+		  else if (x / 10 == 5)
+			  System.out.print(" Valet de ");
+		  else if (x / 10 == 6)
+			  System.out.print(" Dame de ");
+		  else if (x / 10 == 7)
+			  System.out.print(" Roi de ");
+		  else if (x / 10 == 8)
+			  System.out.print(" As de ");
+		  if (x % 10 == 1)
+			  System.out.println("Coeur");
+		  else if (x % 10 == 2)
+			  System.out.println("Pique");
+		  else if (x % 10 == 3)
+			  System.out.println("Carreau");
+		  else if (x % 10 == 4)
+			  System.out.println("Trèfle");
+	  }
       @Override
       protected void channelRead0(ChannelHandlerContext ctx, String msg)
       {
@@ -28,7 +50,8 @@ import io.netty.channel.SimpleChannelInboundHandler;
     	 }
     		 else if (cutt[0].equals("crd"))
     	 {
-    			 System.out.println("Votre adversaire a tiré " + cutt[1]);
+    			 System.out.print("Votre adversaire a tiré");
+    			 which_card(Integer.parseInt(cutt[1]));
     		 if (Integer.parseInt(cutt[1]) / 10 > Cards.D1.get(0) / 10)
     			 Cards.D1.remove(0);
     		 else if (Integer.parseInt(cutt[1]) / 10 < Cards.D1.get(0) / 10)
@@ -69,9 +92,9 @@ import io.netty.channel.SimpleChannelInboundHandler;
     		 System.out.println("je détiens Exodia et " + (Cards.D1.size() + Cards.D2.size()) + " autre(s) cartes en main");
     	 }
       }
-      
       @Override
-      public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+      public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)
+      {
           cause.printStackTrace();
           ctx.close();
       }

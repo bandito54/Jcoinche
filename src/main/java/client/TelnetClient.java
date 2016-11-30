@@ -14,10 +14,7 @@ import cards.*;
   
   import java.io.BufferedReader;
   import java.io.InputStreamReader;
-  
-  /**
-   * Simplistic telnet client.
-   */
+
   public final class TelnetClient
   {
 	  static final Cards CARD = new Cards();
@@ -25,12 +22,37 @@ import cards.*;
       static final String HOST = System.getProperty("host", "10.18.207.82");
       static final int PORT = Integer.parseInt(System.getProperty("port", SSL? "6060" : "2626"));
       public static int player = 0; 
+
+	 static void	which_card(int x)
+	  {
+		  if (x / 10 == 1)
+			  System.out.print(" 7 de ");
+		  else if (x / 10 == 2)
+			  System.out.print(" 8 de ");
+		  else if (x / 10 == 3)
+			  System.out.print(" 9 de ");
+		  else if (x / 10 == 4)
+			  System.out.print(" 10 de ");
+		  else if (x / 10 == 5)
+			  System.out.print(" Valet de ");
+		  else if (x / 10 == 6)
+			  System.out.print(" Dame de ");
+		  else if (x / 10 == 7)
+			  System.out.print(" Roi de ");
+		  else if (x / 10 == 8)
+			  System.out.print(" As de ");
+		  if (x % 10 == 1)
+			  System.out.println("Coeur");
+		  else if (x % 10 == 2)
+			  System.out.println("Carreau");
+		  else if (x % 10 == 3)
+			  System.out.println("Trèfle");
+		  else if (x % 10 == 4)
+			  System.out.println("Pique");
+	  }
       
       public static void main(String[] args) throws Exception
       {
-    	  CreateGui gui = new CreateGui();
-    	  
-          // Configure SSL.
           final SslContext sslCtx;
           if (SSL) {
               sslCtx = SslContextBuilder.forClient()
@@ -38,21 +60,15 @@ import cards.*;
           } else {
               sslCtx = null;
           }
-  
           EventLoopGroup group = new NioEventLoopGroup();
           try {
               Bootstrap b = new Bootstrap();
               b.group(group)
                .channel(NioSocketChannel.class)
                .handler(new TelnetClientInitializer(sslCtx));
-  
-              // Start the connection attempt.
-              Channel ch = b.connect(HOST, PORT).sync().channel();
-  
-              // Read commands from the stdin.
+              Channel ch = b.connect(HOST, PORT).sync().channel(); 
               ChannelFuture lastWriteFuture = null;
               BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-
               for (;;)
               {
                   String line = in.readLine();
@@ -60,22 +76,14 @@ import cards.*;
                   {
                       break;
                   }
-  
-                  // Sends the received line to the server.
-                  //if (line.equals("fdp"))
-                  //{
                 	  lastWriteFuture = ch.writeAndFlush("crd " + Cards.D1.get(0) + " " + player + "\r\n");
-                	  System.out.println("Je joue la carte : " + Cards.D1.get(0));
-                  //}
-                  // If user typed the 'bye' command, wait until the server closes
-                  // the connection.
+                	  System.out.print("Je joue la carte :");
+                	  which_card(Cards.D1.get(0));
                   if ("bye".equals(line.toLowerCase())) {
                       ch.closeFuture().sync();
                       break;
                   }
               }
-                
-              // Wait until all messages are flushed before closing the channel.
               if (lastWriteFuture != null) {
                   lastWriteFuture.sync();
               }

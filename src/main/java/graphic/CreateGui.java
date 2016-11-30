@@ -7,10 +7,11 @@ import cards.*;
 import client.*;
 import server.*;
 
-public class CreateGui extends JFrame {
+public class CreateGui extends JFrame
+{
 	static JFrame frame = new JFrame("JCoinche");//CREATION DE MA FRAME
-
-	public static void createAndShowGUI(Cards deck) {
+	public static void createAndShowGUI(Cards deck)
+	{
 		//PARAMETRES DE LA FENETRE
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//FERME LE PROGRAMME SI ON FERME LA FENETRE
@@ -28,7 +29,8 @@ public class CreateGui extends JFrame {
 		frame.setSize(800, 315);//DONNE LES DIMENSIONS DE LA FENETRE
 	}
 
-	public static void contentGUI(Cards deck){
+	public static void contentGUI(Cards deck)
+	{
 		//ENCART DU JOUEUR 1
 		JLabel deck1 = new JLabel();
 		int total = Cards.D1.size() + Cards.D2.size();
@@ -48,10 +50,4 @@ public class CreateGui extends JFrame {
 		playButton.setEnabled(true);
 	    frame.getContentPane().add(playButton, BorderLayout.CENTER);//MISE EN PLACE DU BOUTON AU CENTRE DE LA FRAME
 	}
-
-//	public static void main(String[] args) {
-//		Cards test = new Cards();
-//		createAndShowGUI(test);
-//		//contentGUI(test);
-//	}
 }
